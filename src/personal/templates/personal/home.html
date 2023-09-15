@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div style="border: 2px solid #000">
+    <h1>AAAAAAAAAAAAAA</h1>
+    <p>BBBBBBBBBBBBBB</p>
+
+    {%for question in questions%}
+        <h3>{{question.title}} | ({{question.priority}})</h3>
+        <p style="margin-left: 10px;">{{question.question}}</p>
+
+    {%endfor%}
+
+</div>
+
+
+{% endblock content %}
+
