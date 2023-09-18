@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <h1>Head</h1>
-</head>
-<body>
-  
-{% block content %}
 
-{% endblock content %}
+  {% if request.user.is_authenticated %}
+    <p>
+      <a href="{% url 'home' %}">Home</a> |
+      <a href="{% url 'account' %}">Account</a> |
+      <a href="{% url 'logout' %}">Logout</a> |
+    </p>
+    <p> Hello, {{request.user.username}} </p>
+
+  {% else %}
+    <p>
+      <a href="{% url 'home' %}">Home </a> |
+      <a href="{% url 'register' %}">Register</a> |
+      <a href="{% url 'login' %}">Login</a>
+    </p>
+  {% endif %}
+  <hr>
+
+</head>
+
+<body>
+
+  {% block content %}
+
+  {% endblock content %}
 
 
 </body>
+
 <footer>
-  <h2>Footer</h2>
+  <hr>
+  <p>Site de Receitas | 2023</p>
+
 </footer>
+
 </html>

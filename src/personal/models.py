@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-PRIORITY = [("l","low"),("m","medium"),("h","high")]
+'''PRIORITY = [("l","low"),("m","medium"),("h","high")]
 
 class Question(models.Model):
     title = models.CharField(max_length=60)
@@ -15,4 +15,4 @@ class Question(models.Model):
 
     class Meta:
         verbose_name = "The Question"
-        verbose_name_plural = "Peoples Questions"
+        verbose_name_plural = "Peoples Questions"'''
