@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from account.forms import AccountAuthenticationForm, AccountUpdateForm
+from django.contrib import messages
 
+from account.forms import AccountAuthenticationForm, AccountUpdateForm
 from account.forms import RegistrationForm
 
 # Create your views here.
@@ -85,23 +86,23 @@ def account_view(request):
 
 def delete_account(request):
 
+	if not request.user.is_authenticated:
+		return redirect("login")
+
 	context = {}
 	
 	if request.POST:
-		form = AccountAuthenticationForm(request.POST)
-		if form.is_valid():
-			email = request.POST['email']
-			password = request.POST['password']
-			user = authenticate(email = email, password=password)
+		email = request.POST['email']
+		password = request.POST['password']
+		user = authenticate(email = request.user.email, password = password)
+		
+		if user:
+			user.delete()
+			messages.success(request, 'Conta deletada com sucesso!.') 
+			return redirect("home")
+		else:
+			context['falied_message'] = 'Usuário ou senha incorretos. Tente novamente.'
 
-			if user:
-				user.delete()
-				return redirect("home")
-			else:
-				
-	else:
-		form = AccountAuthenticationForm()
-
-	context['delete_account_form'] = form
+	
 	return render(request, 'account/delete_account.html', context)
 
