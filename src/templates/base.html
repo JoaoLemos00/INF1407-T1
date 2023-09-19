@@ -1,44 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Title</title>
 
-  {% if request.user.is_authenticated %}
-    <p>
-      <a href="{% url 'home' %}">Home</a> |
-      <a href="{% url 'account' %}">Account</a> |
-      <a href="{% url 'logout' %}">Logout</a> |
-    </p>
-    <p> Hello, {{request.user.username}} </p>
-
-  {% else %}
-    <p>
-      <a href="{% url 'home' %}">Home </a> |
-      <a href="{% url 'register' %}">Register</a> |
-      <a href="{% url 'login' %}">Login</a>
-    </p>
-  {% endif %}
-  <hr>
+  {% include 'snippets/header.html' %}
 
 </head>
 
 <body>
 
-  {% block content %}
+  <main>
 
-  {% endblock content %}
+    <style type="text/css">
+      .main{
+        min-height: 100vh;
+        height: 100%;
+      }
+    </style>
+
+    <div class="main">
+      
+        {% block content %}
+
+        {% endblock content %}
+
+    </div>
+   
+  </main>
+
+  <footer>
+    
+    {% include 'snippets/footer.html' %}
+    
+  </footer>
+
 
 
 </body>
-
-<footer>
-  <hr>
-  <p>Site de Receitas | 2023</p>
-
-</footer>
-
-</html>

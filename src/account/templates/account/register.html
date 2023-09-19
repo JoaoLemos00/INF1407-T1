@@ -3,24 +3,54 @@
 
 {% block content %}
 
-<h2>Register</h2>
-<form method="post">{% csrf_token %}
-    {% for field in registration_form %}
-        <p>
-            {{field.label_tag}}
-            {{field}}
+<form class="bg-light" method="post">
+    {% csrf_token %}
 
-            {% if field.help_text %}
-                <small style="color: grey;">{{field.help_text}}</small>
-            {% endif %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mx-auto my-5">
+                <div class="card mx-auto my-5">
+                    <div class="card-header">
+                        <h3 class="text-center">Register an account</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="E-mail" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="username" class="form-control" id="password" placeholder="Username" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" name="password1" class="form-control" id="password" placeholder="Senha" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" name="password2" class="form-control" id="password" placeholder="Confirmacao da Senha" required>
+                            </div>
 
-            {% for error in field.errors %}
-                <p style="color: red;">{{error}}</p>
-            {% endfor %}
-        </p>
-    {% endfor %}
-    <button type="submit">Register</button>
-    
+                            {% for field in registration_form %}
+                            <p>
+                                {% for error in field.errors %}
+                                    <p style="color: red;">{{error}}</p>
+                                {% endfor %}
+                            </p>
+                            {% endfor %}
+
+                            {% if registration_form.non_field_errors %}
+                                <div style="color: red;">
+                                    <p>{{registration_form.non_field_errors}}</p>
+                                </div>
+                            {% endif %}
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
 

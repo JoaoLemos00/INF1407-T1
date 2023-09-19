@@ -65,8 +65,12 @@ def account_view(request):
 	if request.POST:
 		form = AccountUpdateForm(request.POST, instance=request.user)
 		if form.is_valid():
+			form.initial = {
+				"email": request.POST['email'],
+				"username":request.POST['username'],
+			}
 			form.save()
-			return redirect("home")
+			context['success_message'] = "Updated"
 	else:
 		form = AccountUpdateForm(
 			initial={
@@ -77,3 +81,27 @@ def account_view(request):
 
 	context['account_form'] = form
 	return render(request,'account/account.html',context)
+
+
+def delete_account(request):
+
+	context = {}
+	
+	if request.POST:
+		form = AccountAuthenticationForm(request.POST)
+		if form.is_valid():
+			email = request.POST['email']
+			password = request.POST['password']
+			user = authenticate(email = email, password=password)
+
+			if user:
+				user.delete()
+				return redirect("home")
+			else:
+				
+	else:
+		form = AccountAuthenticationForm()
+
+	context['delete_account_form'] = form
+	return render(request, 'account/delete_account.html', context)
+
