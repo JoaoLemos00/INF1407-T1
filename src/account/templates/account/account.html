@@ -32,13 +32,7 @@
                             <div style="color: red;">
                                 <p>{{ account_form.non_field_errors }}</p>
                             </div>
-                        {% endif %}
-
-                        {% if success_message %}
-                            <div style="color: green; text-align: center;">
-                                <p>{{ success_message }}</p>
-                            </div>
-                        {% endif %}
+                        {% endif %}    
 
                         <div class="d-flex flex-column">
                             <a class="m-auto" href="{% url 'password_change' %}">Trocar Senha</a>
@@ -62,7 +56,7 @@
                                 <div>
                                     <li class="list-group-item d-flex justify-content-between mb-1">
                                         <div>
-                                            <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >{{ post.title }}</a>
+                                            <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >{{ post.title }}</a>   
                                         </div>
                                         <div>
                                             <p class="mb-0">Data Publicada: {{ post.date_published }}</p>

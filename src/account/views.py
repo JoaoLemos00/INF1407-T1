@@ -74,7 +74,10 @@ def account_view(request):
 				"username":request.POST['username'],
 			}
 			form.save()
-			context['success_message'] = "Updated"
+			messages.success(request, 'Conta atualizada com sucesso!')
+		else:
+			messages.warning(request, 'E-mail ou usuário indisponíveis. Tente novamente.')
+
 	else:
 		form = AccountUpdateForm(
 			initial={
@@ -108,9 +111,9 @@ def delete_account_view(request):
 			messages.success(request, 'Conta deletada com sucesso!') 
 			return redirect("home")
 		else:
-			context['falied_message'] = 'Usuário ou senha incorretos. Tente novamente.'
+			messages.warning(request, 'Usuário ou senha incorretos. Tente novamente.')
+			
 
-	
 	return render(request, 'account/delete_account.html', context)
 
 

@@ -22,8 +22,8 @@ class BlogPost(models.Model):
     image = models.ImageField(upload_to=upload_location, null=True, blank=True)
     date_published = models.DateField(auto_now_add=True, verbose_name="date published")
     date_updated = models.DateField(auto_now_add=True, verbose_name="date updated")
-    time_published = models.TimeField(auto_now_add=True, verbose_name="time publisehd")
-    time_updated = models.TimeField(auto_now_add=True, verbose_name="time publisehd")
+    #time_published = models.TimeField(auto_now_add=True, verbose_name="time publisehd")
+    #time_updated = models.TimeField(auto_now=True, verbose_name="time publisehd")
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = models.SlugField(blank=True, unique=True)
 

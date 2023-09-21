@@ -1,13 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
 <div class="container">
     <div class="row">
         
         <!-- Blog post -->
         
-        <div class="card m-auto mt-4" style="width: 900px;">
+        <div class="card m-auto">
             <div class="card-body my-2">
                 {% if blog_post.author == request.user %}
                 <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
@@ -17,15 +13,12 @@
                 <div class="d-flex justify-content-between align-items-center"> 
                     <h2 class="card-title">{{blog_post.title}}</h2>
                     {% if blog_post.author == request.user %}
-                    <div class="d-flex justify-content-end mx-2">
-                        <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary mx-2">Editar Post</a>
-                        <a href="{% url 'blog:delete' blog_post.slug %}" class="btn btn-danger">Deletar Post</a>
-                    </div> 
+                        <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary">Editar Post</a>
                     {% endif %}
                 </div>
                 <hr>
                 <div class="container">
-                    <p class="card-text">{{blog_post.body|safe}}</p>
+                    <p class="card-text">{{blog_post.body}}</p>
                 </div>
                 {% if blog_post.image %}
                     <hr>
@@ -41,5 +34,3 @@
 
     </div>
 </div>
-
-{% endblock content%}

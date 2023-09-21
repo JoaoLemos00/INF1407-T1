@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        
+        <!-- Blog post -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card m-auto mt-4" style="width: 900px;">
+                <div class="card-body my-2">
+                    <h3 class="text-center">Tem certeza que deseja deletar o post?</h3>
+                    <hr>
+                    {% if blog_post.author == request.user %}
+                    <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
+                    {% else %}
+                    <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_published}} </p>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center"> 
+                        <h2 class="card-title">{{blog_post.title}}</h2>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <p class="card-text">{{blog_post.body|safe}}</p>
+                    </div>
+                    {% if blog_post.image %}
+                        <hr>
+                        <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
+                    {% endif %}
+            
+                    <div class="mt-3 text-center">
+                        <button type="submit" class="btn btn-danger">Deletar Post</button> 
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    Atualizado em {{blog_post.date_updated}} por {{blog_post.author}}
+                </div>
+                
+            </div>
+        </form>
+        <!-- END Blog post -->
+
+    </div>
+</div>
+
+{% endblock content%}

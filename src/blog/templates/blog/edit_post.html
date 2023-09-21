@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-2">
+    <div class="row justify-content-center">
+        <div class="align-items-center">
+            <div class="card m-auto mt-4" style="width: 900px;">
+                <div class="card-header">
+                    <h3 class="text-center">Editar Postagem</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3 form-group">
+                            <label for="id_title" class="form-label">Título</label>
+                            <input type="text" name="title" class="form-control" id="id_title" placeholder="Título" value="{{form.initial.title}}" autofocus>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="id_body" class="form-label">Conteúdo</label>
+                            <textarea name="body" id="id_body" rows="10" class="form-control" placeholder="Qual é a sua receita?" required>{{form.initial.body}} </textarea>
+                        </div>
+                        <div class="mb-3">
+                            <img class="img-fluid image" src="{{form.initial.image.url}}" id="id_image_display">
+                            <label for="id_image" class="form-label mt-3">Nova Imagem</label>
+                            <input type="file" name="image" id="id_image" accept="image/*" class="form-control">
+                        </div>
+
+                        {% for field in form %}
+                            <p>
+                                {% for error in field.errors %}
+                                    <span style="color: red;">{{ error }}</span>
+                                {% endfor %}
+                            </p>
+                        {% endfor %}
+
+                        {% if form.non_field_errors %}
+                            <div style="color: red;">
+                                <p>{{ form.non_field_errors }}</p>
+                            </div>
+                        {% endif %} 
+                        <div class="mt-3 d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Atualizar Post</button> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+</script>
+
+
+{% endblock content %}
