@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        <!-- Blog post -->
+
+        <div class="card m-auto">
+            <div class="card-body my-2">
+                <p class="card-text"> Postado por {{blog_post.author}} em {{blog_post.date_published}} </p>
+                <h2 class="card-title">{{blog_post.title}}</h2>
+                <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
+                <hr>
+                <div class="container">
+                    <p class="card-text">{{blog_post.body|safe}}</p>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                Atualizado em {{blog_post.date_updated}} por {{blog_post.author}}
+            </div>
+        </div>
+
+        <!-- END Blog post -->
+
+    </div>
+</div>
+
+{% endblock content%}

@@ -1,40 +1,41 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
-
-<form class="bg-light" method="post">{% csrf_token %}
-
-    <div class="container mt-5">
+<div class="container">
+    <div class="d-flex flex-column" style="margin-bottom: 20px;">
+        <img class="img-fluid mx-auto" src="{% static 'Logo-site-Blog-com-receitas3SF-removebg-preview.png'%}" alt="Blog de Receitas" width="400" height="20" style="margin-top: 30px;">
+    </div>
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 mx-auto my-5">
-                <div class="card mx-auto my-5">
+            <div class="col-md-6 mx-auto my-3">
+                <div class="card">
                     <div class="card-header">
                         <h3 class="text-center">Login</h3>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form method="post">
+                            {% csrf_token %}
                             <div class="mb-3">
-                                <input type="email" name = "email" class="form-control" id="email" placeholder="Digite seu e-mail" required>
+                                <label for="email">E-mail</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Digite seu e-mail" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" name= "password" class = "form-control" id="password" placeholder="Digite sua senha" required>
+                                <label for="password">Senha</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Digite sua senha" required>
                             </div>
-
-                                {% for field in login_form %}
-                                <p>
-                                    {% for error in field.errors %}
-                                        <p style="color: red;">{{error}}</p>
-                                     {% endfor %}
-                                </p>
+                            {% for field in login_form %}
+                            <p>
+                                {% for error in field.errors %}
+                                <p style="color: red;">{{ error }}</p>
                                 {% endfor %}
-
-                                {% if login_form.non_field_errors %}
-                                    <div style="color: red;">
-                                        <p>{{login_form.non_field_errors}}</p>
-                                    </div>
-                                {% endif %}
-
+                            </p>
+                            {% endfor %}
+                            {% if login_form.non_field_errors %}
+                            <div style="color: red;">
+                                <p>{{ login_form.non_field_errors }}</p>
+                            </div>
+                            {% endif %}
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Entrar</button>
                             </div>
@@ -42,12 +43,11 @@
                     </div>
                     <div class="card-footer text-center">
                         <p>Não tem uma conta? <a href="{% url 'register' %}">Cadastre-se</a></p>
-                        <p>Esqueceu sua senha? <a href="#">Redefinir Senha</a></p>
+                        <p>Esqueceu sua senha? <a href="{% url 'password_reset' %}">Redefinir Senha</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form>
-
+</div>
 {% endblock content %}

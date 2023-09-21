@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
+from blog.forms import BlogPost
 from account.forms import AccountAuthenticationForm, AccountUpdateForm
 from account.forms import RegistrationForm
 
@@ -30,6 +31,7 @@ def registration_view(request):
 
 def logout_view(request):
 	logout(request)
+	messages.success(request, 'Logout feito com sucesso!') 
 	return redirect('home')
 
 
@@ -49,6 +51,7 @@ def login_view(request):
 
 			if user:
 				login(request,user)
+				messages.success(request, 'Login feito com sucesso!') 
 				return redirect("home")
 	else:
 		form = AccountAuthenticationForm()
@@ -57,7 +60,7 @@ def login_view(request):
 	return render(request, 'account/login.html', context)
 
 def account_view(request):
-
+	
 	if not request.user.is_authenticated:
 		return redirect("login")
 
@@ -81,10 +84,14 @@ def account_view(request):
 		)
 
 	context['account_form'] = form
+
+	blog_post = BlogPost.objects.filter(author=request.user)
+	context['blog_posts'] = blog_post
+
 	return render(request,'account/account.html',context)
 
 
-def delete_account(request):
+def delete_account_view(request):
 
 	if not request.user.is_authenticated:
 		return redirect("login")
@@ -98,7 +105,7 @@ def delete_account(request):
 		
 		if user:
 			user.delete()
-			messages.success(request, 'Conta deletada com sucesso!.') 
+			messages.success(request, 'Conta deletada com sucesso!') 
 			return redirect("home")
 		else:
 			context['falied_message'] = 'Usuário ou senha incorretos. Tente novamente.'
@@ -106,3 +113,6 @@ def delete_account(request):
 	
 	return render(request, 'account/delete_account.html', context)
 
+
+def must_authenticate_view(request):
+	return render(request,"account/must_authenticate.html",{})

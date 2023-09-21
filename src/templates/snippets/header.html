@@ -1,3 +1,4 @@
+{% load static %}
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -6,14 +7,34 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
 integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 
+
 <header class="p-3 text-bg-dark">
     <div class="container">
+        <div class="logo-container">
+            <img class="img-fluid logo-img" src="{% static 'Logo-site-Blog-com-receitas3SF-removebg-preview.png'%}" alt="Blog de Receitas">
+
+            <style>
+                /* Classe CSS personalizada para controlar o tamanho da imagem */
+                .logo-img {
+                    width: 100px; /* Largura desejada */
+                    height: auto; /* Altura automática para manter a proporção */
+                }
+            
+                /* Estilos para posicionar a imagem no canto superior esquerdo */
+                .logo-container {
+                    position: absolute;
+                    top: 15px; /* Distância do topo da tela */
+                    left: 10px; /* Distância da borda esquerda da tela */
+                }
+            </style>
+            
+        </div>
 
       <div class="d-flex flex-wrap align-items-center justify-content-start justify-content-lg-start">
 
         {% if request.user.is_authenticated %}
             <a class="d-flex align-items-center text-white text-decoration-none">
-                Hello, {{request.user.username}} |
+                Bem-Vindo, {{request.user.username}}!  |
             </a>
         {% endif %}
 
@@ -29,7 +50,7 @@ integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+f
 
             <div class="text-end">
                 <a role="button" href="{% url 'logout' %}" class="btn btn-outline-light me-2">Logout</a>
-                <a role="button" href="{% url 'account' %}"  class="btn btn-warning">Account</a>
+                <a role="button" href="{% url 'account' %}"  class="btn btn-warning">Conta</a>
             </div>
 
         {% else %}
@@ -45,20 +66,6 @@ integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+f
 
     </div>
 
-    {% if messages %}
-    <div class="messages align-items-end">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show " style="position: fixed; top: 10px; right: 10px;">
-            <script>
-                setTimeout(function () {
-                    document.querySelector('.alert').style.display = 'none';
-                }, 3000); 
-            </script>
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
+    {% include 'snippets/popup.html' %}
 
 </header>
