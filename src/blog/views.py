@@ -63,6 +63,10 @@ def edit_post_view(request,slug):
         return redirect('must_authenticate.html')
     
     blog_post = get_object_or_404(BlogPost,slug = slug)
+
+    if blog_post.author != user:
+        return redirect("home")
+
     if request.POST:
         form = UpdateBlogPostFrom(request.POST or None, request.FILES or None, instance=blog_post)
         if form.is_valid():

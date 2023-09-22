@@ -1,8 +1,8 @@
-<div class="container">
-    <div class="row">
+<div class="container ">
+    <div class="row ">
         <!-- Blog post -->
-        <div class="card m-auto ">
-            <div class="card-body my-2">
+        <div class="card m-auto text-bg-dark">
+            <div class="card-body my-2 ">
                 {% if blog_post.author == request.user %}
                 <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
                 {% else %}
@@ -14,10 +14,10 @@
                 <hr>
                 <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >
                     <div class="container">
-                        <p class="card-text">{{blog_post.body}}</p>
+                        <p class="card-text text-bg-dark">{{blog_post.body}}</p>
                     </div>
                     {% if blog_post.image %}
-                        <hr>
+                        <hr class="text-bg-dark">
                         <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
                     {% endif %}
                 </a>
@@ -27,7 +27,7 @@
                     Atualizado em {{blog_post.date_updated}} 
                 </div>
             {% else %}
-            <div class="card-footer text-muted">
+            <div class="card-footer text-muted text-bg-dark">
                 Post original
             </div>
             {% endif %}

@@ -2,22 +2,25 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
+
+<title>Site de Receitas</title>
+
+<div class="container ">
     <div class="row">
 
         
-        <div class="d-lg-none col-lg-7 offset-lg-1 flex-column"> 
+        <div class="d-lg-none col-lg-7 offset-lg-1 flex-column text-bg-dark"> 
             <div class="card create-post-bar d-flex flex-column p-3">
 				<img class="img-fluid d-block m-auto pb-2" src="{% static 'Logo-site-Blog-com-receitas3SF-removebg-preview.png' %}" width="72" height="72">
 				<h3 class="text-center">Publique a sua receita!</h3>
                 <p>Compartilhe sua receita favorita com a comunidade.</p>
-				<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+				<p class="m-auto"><a class="btn btn-warning" href="{% url 'blog:create' %}">Create post</a></p>
 			</div>
         </div>
         
 
         <!-- Blog feed -->
-        <div class= "left-column col-lg-7 offset-lg-1">
+        <div class= "left-column col-lg-7 offset-lg-1 ">
             {% for post in blog_posts %}
             <div class="blog-post-container mt-3">
                 {% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
@@ -31,11 +34,11 @@
         
 
         <div class="right-column col-lg-3 d-lg-flex d-none flex-column mt-3">
-			<div class="card create-post-bar d-flex flex-column p-3">
+			<div class="card create-post-bar d-flex flex-column p-3 text-bg-dark">
 				<img class="img-fluid d-block m-auto pb-2" src="{% static 'Logo-site-Blog-com-receitas3SF-removebg-preview.png' %}" width="72" height="72">
 				<h3 class="text-center">Publique a sua receita!</h3>
                 <p>Compartilhe sua receita favorita com a comunidade.</p>
-				<p class="m-auto"><a class="btn btn-primary" href="{% url 'blog:create' %}">Create post</a></p>
+				<p class="m-auto"><a class="btn btn-warning" href="{% url 'blog:create' %}">Create post</a></p>
 			</div>
 		</div>
 
