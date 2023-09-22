@@ -1,33 +1,36 @@
 <div class="container">
     <div class="row">
-        
         <!-- Blog post -->
-        
-        <div class="card m-auto">
+        <div class="card m-auto ">
             <div class="card-body my-2">
                 {% if blog_post.author == request.user %}
                 <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
                 {% else %}
-                <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_published}} </p>
+                <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_updated}} </p>
                 {% endif %}
                 <div class="d-flex justify-content-between align-items-center"> 
                     <h2 class="card-title">{{blog_post.title}}</h2>
-                    {% if blog_post.author == request.user %}
-                        <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary">Editar Post</a>
-                    {% endif %}
                 </div>
                 <hr>
-                <div class="container">
-                    <p class="card-text">{{blog_post.body}}</p>
+                <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >
+                    <div class="container">
+                        <p class="card-text">{{blog_post.body}}</p>
+                    </div>
+                    {% if blog_post.image %}
+                        <hr>
+                        <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
+                    {% endif %}
+                </a>
+            </div>
+            {% if blog_post.date_updated != blog_post.date_published %}
+                <div class="card-footer text-muted">
+                    Atualizado em {{blog_post.date_updated}} 
                 </div>
-                {% if blog_post.image %}
-                    <hr>
-                    <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
-                {% endif %}
-            </div>
+            {% else %}
             <div class="card-footer text-muted">
-                Atualizado em {{blog_post.date_updated}} por {{blog_post.author}}
+                Post original
             </div>
+            {% endif %}
         </div>
 
         <!-- END Blog post -->

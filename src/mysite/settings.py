@@ -80,6 +80,8 @@ TEMPLATES = [
     },
 ]
 
+BLOG_POST_PER_PAGE = 5
+
 AUTH_USER_MODEL = 'account.Account'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'

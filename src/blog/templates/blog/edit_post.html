@@ -21,7 +21,9 @@
                             <textarea name="body" id="id_body" rows="10" class="form-control" placeholder="Qual é a sua receita?" required>{{form.initial.body}} </textarea>
                         </div>
                         <div class="mb-3">
+                            {% if form.initial.image %}
                             <img class="img-fluid image" src="{{form.initial.image.url}}" id="id_image_display">
+                            {% endif %}
                             <label for="id_image" class="form-label mt-3">Nova Imagem</label>
                             <input type="file" name="image" id="id_image" accept="image/*" class="form-control">
                         </div>

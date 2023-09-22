@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-
+from operator import attrgetter
 from blog.forms import BlogPost
+from django.conf import settings
+
+from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from account.forms import AccountAuthenticationForm, AccountUpdateForm
 from account.forms import RegistrationForm
 
@@ -88,7 +91,19 @@ def account_view(request):
 
 	context['account_form'] = form
 
-	blog_post = BlogPost.objects.filter(author=request.user)
+	blog_post = sorted(BlogPost.objects.filter(author=request.user), key=attrgetter('date_updated'), reverse=True)
+	context['blog_posts'] = blog_post
+	
+	page = request.GET.get("page",1)
+	blog_posts_paginator = Paginator(blog_post, settings.BLOG_POST_PER_PAGE)
+
+	try:
+		blog_post = blog_posts_paginator.page(page)
+	except PageNotAnInteger:
+		blog_post = blog_posts_paginator.page(settings.BLOG_POST_PER_PAGE)
+	except EmptyPage:
+		blog_post = blog_posts_paginator.page(blog_posts_paginator.num_pages)
+
 	context['blog_posts'] = blog_post
 
 	return render(request,'account/account.html',context)

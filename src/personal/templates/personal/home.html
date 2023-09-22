@@ -23,11 +23,13 @@
                 {% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
             </div>
             {% endfor %}
+
+            
         </div>
         
         <!-- End Blog feed -->
-
         
+
         <div class="right-column col-lg-3 d-lg-flex d-none flex-column mt-3">
 			<div class="card create-post-bar d-flex flex-column p-3">
 				<img class="img-fluid d-block m-auto pb-2" src="{% static 'Logo-site-Blog-com-receitas3SF-removebg-preview.png' %}" width="72" height="72">
@@ -37,7 +39,9 @@
 			</div>
 		</div>
 
+        {% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
         
     </div>
 </div>
+
 {% endblock content %}

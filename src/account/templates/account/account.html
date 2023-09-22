@@ -1,10 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 mx-auto">
-            <div class="card mx-auto my-3">
+<div class="container mt-4">
+    <div class="row">
+        <!-- Coluna para os posts no centro da tela -->
+        <div class="col-md-7">
+            <h3 class="mb-2 font-weight-normal">Seus Posts:</h3>
+            {% if blog_posts %}
+                <ul class="list-group">
+                    {% for post in blog_posts %}
+                        <div class="blog-post-container mt-3">
+                            {% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+                        </div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul class="list-group">
+                    <div>
+                        <li class="list-group-item d-flex justify-content-center">
+                            <div>
+                                <a href="{% url 'blog:create' %}" style="text-decoration: none !important" class="stretched-link link-dark">Você não tem nenhuma postagem! Crie uma clicando aqui</a>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+            {% endif %}
+        </div>
+        
+        <!-- Coluna para o formulário de mudança de email e senha (menor) -->
+        <div class="col-md-5 mt-2">
+            <div class="card offset-md-2 mt-5">
                 <div class="card-header">
                     <h3 class="text-center">Conta</h3>
                 </div>
@@ -32,7 +57,7 @@
                             <div style="color: red;">
                                 <p>{{ account_form.non_field_errors }}</p>
                             </div>
-                        {% endif %}    
+                        {% endif %}
 
                         <div class="d-flex flex-column">
                             <a class="m-auto" href="{% url 'password_change' %}">Trocar Senha</a>
@@ -45,41 +70,10 @@
                     </form>
                 </div>
             </div>
-            
-            <div class="container mt-4 p-2">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="mb-3 font-weight-normal">Seus Posts:</h3>
-                        {% if blog_posts %}
-                            <ul class="list-group">
-                                {% for post in blog_posts %}
-                                <div>
-                                    <li class="list-group-item d-flex justify-content-between mb-1">
-                                        <div>
-                                            <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >{{ post.title }}</a>   
-                                        </div>
-                                        <div>
-                                            <p class="mb-0">Data Publicada: {{ post.date_published }}</p>
-                                        </div>
-                                    </li>
-                                </div>
-                                {% endfor %}
-                            </ul> 
-                            {% else %}
-                            <ul class="list-group"> 
-                                <div>
-                                    <li class="list-group-item d-flex justify-content-center">
-                                        <div>
-                                            <a href="{% url 'blog:create' %}" style="text-decoration: none !important" class=" stretched-link link-dark" >Você não tem nenhuma postagem! Crie uma clicando aqui</a>
-                                        </div>
-                                    </li>
-                                </div>
-                            </ul>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
         </div>
+        {% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
     </div>
 </div>
+
+
 {% endblock content %}
