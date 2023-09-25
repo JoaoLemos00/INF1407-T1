@@ -25,6 +25,8 @@
             <div class="blog-post-container mt-3">
                 {% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
             </div>
+            {% empty %}
+            <p>Sem Posts</p>
             {% endfor %}
 
             

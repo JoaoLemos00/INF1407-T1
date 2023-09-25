@@ -1,47 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <title>{{ blog_post.title }}</title>
 
-<title>{{blog_post.title}}</title>
-
-<div class="container">
-    <div class="row">
-        
-        <!-- Blog post -->
-        
-        <div class="card m-auto mt-4" style="width: 900px;">
-            <div class="card-body my-2">
-                {% if blog_post.author == request.user %}
-                <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
-                {% else %}
-                <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_published}} </p>
-                {% endif %}
-                <div class="d-flex justify-content-between align-items-center"> 
-                    <h2 class="card-title">{{blog_post.title}}</h2>
+    <div class="container">
+        <div class="row">
+            <!-- Blog post -->
+            <div class="card m-auto mt-4 text-bg-dark" style="width: 900px;">
+                <div class="card-body my-2">
                     {% if blog_post.author == request.user %}
-                    <div class="d-flex justify-content-end mx-2">
-                        <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-primary mx-2">Editar Post</a>
-                        <a href="{% url 'blog:delete' blog_post.slug %}" class="btn btn-danger">Deletar Post</a>
-                    </div> 
+                    <p class="card-text">Postado por Você, em {{ blog_post.date_published }}</p>
+                    {% else %}
+                    <p class="card-text">Postado por {{ blog_post.author }}, em {{ blog_post.date_published }}</p>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center"> 
+                        <h2 class="card-title">{{ blog_post.title }}</h2>
+                        {% if blog_post.author == request.user %}
+                        <div class="d-flex justify-content-end mx-2">
+                            <a href="{% url 'blog:edit' blog_post.slug %}" class="btn btn-warning mx-2">Editar Post</a>
+                            <a href="{% url 'blog:delete' blog_post.slug %}" class="btn btn-danger">Deletar Post</a>
+                        </div> 
+                        {% endif %}
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <p class="card-text">{{ blog_post.body|safe }}</p>
+                    </div>
+                    {% if blog_post.image %}
+                    <hr>
+                    <img class="card-img-top" src="{{ blog_post.image.url }}" alt="">
                     {% endif %}
                 </div>
-                <hr>
-                <div class="container">
-                    <p class="card-text">{{blog_post.body|safe}}</p>
+                <div class="card-footer text-muted">
+                    Atualizado em {{ blog_post.date_updated }} por {{ blog_post.author }}
                 </div>
-                {% if blog_post.image %}
-                    <hr>
-                    <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
-                {% endif %}
+                
+                <!-- Comentários -->
+                <div class="card mt-3 text-bg-dark">
+                    <div class="card-body">
+                        <h3>Comentários</h3>
+                        <hr>
+                            {% for comment in blog_post.comments.all %}
+                            <a href="{% url 'blog:edit_comment' blog_post.slug comment.id %}" style="text-decoration: none !important" class="stretched-link link-dark"></a>
+                                <div class="comment texy">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>{{ comment.author }}</strong>
+                                        {% if comment.date_published == comment.date_updated %}
+                                            <span>{{ comment.date_published }}</span>
+                                
+                                        {% else %}
+                                            <span>Att. {{ comment.date_updated }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <p>{{ comment.body }}</p>
+                                </div>
+                             </a>
+                            <hr>
+                        {% empty %}
+                            <p>Nenhum comentário ainda.</p>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+                <!-- Fim dos Comentários -->
+
+                <!-- Formulário para adicionar um novo comentário -->
+                <div class="card mt-3 text-bg-dark">
+                    <div class="card-body">
+                        <h3>Adicione um Comentário</h3>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group ">
+                                <label for="id_body" class="form-label">Comentário</label>
+                                <textarea name="body" id="id_body" rows="3" class="form-control text-bg-dark" placeholder="Qual é a o seu comentário" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning mt-3 ">Enviar Comentário</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Fim do Formulário de Comentário -->
+                <p></p>
             </div>
-            <div class="card-footer text-muted">
-                Atualizado em {{blog_post.date_updated}} por {{blog_post.author}}
-            </div>
+            <!-- END Blog post -->
+            
         </div>
-
-        <!-- END Blog post -->
-
     </div>
-</div>
-
-{% endblock content%}
+{% endblock content %}

@@ -4,11 +4,11 @@
 
 <title>Criar um Post</title>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
+<div class="container mt-5 ">
+    <div class="row justify-content-center ">
+        <div class="col-md-6 ">
+            <div class="card text-bg-dark">
+                <div class="card-header ">
                     <h3 class="text-center">Criar Nova Postagem</h3>
                 </div>
                 <div class="card-body">
@@ -16,18 +16,18 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="id_title" class="form-label">Título</label>
-                            <input type="text" name="title" class="form-control" id="id_title" placeholder="Título" required autofocus>
+                            <input type="text" name="title" class="form-control text-bg-dark" id="id_title" placeholder="Título" required autofocus>
                         </div>
                         <div class="mb-3">
                             <label for="id_body" class="form-label">Conteúdo</label>
-                            <textarea name="body" id="id_body" rows="10" class="form-control" placeholder="Qual é a sua receita?" required></textarea>
+                            <textarea name="body" id="id_body" rows="10" class="form-control text-bg-dark" placeholder="Qual é a sua receita?" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="id_image" class="form-label">Imagem</label>
-                            <input type="file" name="image" id="id_image" accept="image/*" class="form-control">
+                            <label for="id_image" class="form-label text-bg-dark">Imagem</label>
+                            <input type="file" name="image" id="id_image" accept="image/*" class="form-control text-bg-dark">
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">POSTAR</button>
+                            <button type="submit" class="btn btn-warning">POSTAR</button>
                         </div>
                     </form>
                 </div>
