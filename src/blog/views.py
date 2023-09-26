@@ -55,25 +55,26 @@ def detail_post_view(request, slug):
     blog_post = get_object_or_404(BlogPost, slug=slug)
     context['blog_post'] = blog_post
     
-    # Verificar se o método de solicitação é POST (ou seja, o formulário foi enviado)
+    
     if request.POST:
-        
+         
+        user = request.user
+        if not user.is_authenticated: 
+            return redirect('must_authenticate.html')
+    
         form = CommentBlogPostForm(request.POST)
         
         if form.is_valid():
             
             comment = form.save(commit=False)
-            comment.author = request.user  # Atribuir o autor do comentário
-            comment.post = blog_post  # Atribuir o post relacionado ao comentário
+            comment.author = request.user  
+            comment.post = blog_post  
             comment.save()
-            form = CommentBlogPostForm()  # Limpar o formulário após a criação do comentário
+            form = CommentBlogPostForm()  
 
-        
     else:
         form = CommentBlogPostForm()
 
-    # Recuperar os comentários relacionados a este post
-    
     comments = CommentBlogPost.objects.filter(post=blog_post)
 
     context['form'] = form
@@ -120,6 +121,9 @@ def edit_comment_post_view(request, slug, comment_id ):
     context = {}
 
     comment = get_object_or_404(CommentBlogPost, id=comment_id)
+    blog_post = get_object_or_404(BlogPost, slug=slug)
+    context['blog_post'] = blog_post
+    
     
     if request.user != comment.author:
         return redirect('blog:detail', slug=comment.post.slug)
@@ -128,7 +132,7 @@ def edit_comment_post_view(request, slug, comment_id ):
         form = UpdateCommentBlogPostForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('blog:detail', slug=comment.post.slug)  # Redirecione para a página de detalhes do post após a edição do comentário
+            return redirect('blog:detail', slug=comment.post.slug)  
     
 
     form = UpdateBlogPostFrom(
@@ -138,5 +142,23 @@ def edit_comment_post_view(request, slug, comment_id ):
     )
 
     context['form'] = form
+    context['blog_post_comment'] = comment
 
     return render(request, 'blog/edit_comment.html', context)
+
+
+def delete_comment_view(request, slug, comment_id):
+
+    context = {}
+
+    comment = get_object_or_404(CommentBlogPost, id=comment_id)
+
+    if request.POST:
+       
+        comment.delete()
+        messages.success(request, 'Comentário excluído com sucesso!')
+        return redirect('blog:detail', slug=comment.post.slug)  
+        
+    context['blog_post_comment'] = comment       
+
+    return render(request, 'blog/delete_post_comment.html', context)

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    
     <title>{{ blog_post.title }}</title>
 
     <div class="container">
@@ -40,29 +41,31 @@
                     <div class="card-body">
                         <h3>Comentários</h3>
                         <hr>
-                            {% for comment in blog_post.comments.all %}
-                            <a href="{% url 'blog:edit_comment' blog_post.slug comment.id %}" style="text-decoration: none !important" class="stretched-link link-dark"></a>
-                                <div class="comment texy">
-                                    <div class="d-flex justify-content-between">
-                                        <strong>{{ comment.author }}</strong>
-                                        {% if comment.date_published == comment.date_updated %}
-                                            <span>{{ comment.date_published }}</span>
-                                
-                                        {% else %}
-                                            <span>Att. {{ comment.date_updated }}</span>
-                                        {% endif %}
-                                    </div>
-                                    <p>{{ comment.body }}</p>
-                                </div>
-                             </a>
-                            <hr>
+                        {% for comment in blog_post.comments.all %}
+                        <div class="comment text">
+                            <div class="d-flex justify-content-between">
+                                <strong>{{ comment.author }}</strong>
+                                {% if comment.date_published == comment.date_updated %}
+                                <span>{{ comment.date_published }}</span>
+                                {% else %}
+                                <span>Att. {{ comment.date_updated }}</span>
+                                {% endif %}
+                            </div>
+                            <p>{{ comment.body }}</p>
+                            <!-- Botão de Edição de Comentário -->
+                            
+                            {% if comment.author == request.user %}
+                                <a href="{% url 'blog:edit_comment' blog_post.slug comment.id %}" class="btn btn-warning ">Editar Comentário</a>
+                            {% endif %}
+                        </div>
+                        <hr>
                         {% empty %}
-                            <p>Nenhum comentário ainda.</p>
+                        <p>Nenhum comentário ainda.</p>
                         {% endfor %}
-                        
                     </div>
                 </div>
                 <!-- Fim dos Comentários -->
+
 
                 <!-- Formulário para adicionar um novo comentário -->
                 <div class="card mt-3 text-bg-dark">

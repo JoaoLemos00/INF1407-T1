@@ -7,6 +7,7 @@ from blog.views import(
     edit_post_view,
     delete_post_view,
     edit_comment_post_view,
+    delete_comment_view,
 )
 
 app_name = 'blog'
@@ -17,5 +18,7 @@ urlpatterns = [
     path('<slug>/edit', edit_post_view, name = "edit" ),
     path('<slug>/delete', delete_post_view, name = "delete" ),
     path('<slug>/edit_comment/<int:comment_id>/',edit_comment_post_view, name='edit_comment'),
+    path('<slug>/delete_post_comment/<int:comment_id>/', delete_comment_view, name='delete_comment')
+
 
 ]

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<title>Deletar {{blog_post.title}}</title>
+
+<div class="container">
+    <div class="row">
+        
+        <!-- Blog post -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card m-auto mt-4" style="width: 900px;">
+                <div class="card-body my-2">
+                    <h3 class="text-center">Tem certeza que deseja deletar o Cometário?</h3>
+                    <hr>
+                    <p class="card-text"> Postado por Você, em {{blog_post_comment.date_updated}} </p>
+                    <div class="d-flex justify-content-between align-items-center"> 
+                        <h2 class="card-title">{{blog_post_comment.title}}</h2>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <p class="card-text">{{blog_post_comment.body|safe}}</p>
+                    </div>
+                    <hr>
+                    <div class="mt-3 text-center">
+                        <button type="submit" class="btn btn-danger">Deletar Post</button> 
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    Atualizado em {{blog_post_comment.date_updated}} por {{blog_post_comment.author}}
+                </div>
+                
+            </div>
+        </form>
+        <!-- END Blog post -->
+
+    </div>
+</div>
+
+{% endblock content%}

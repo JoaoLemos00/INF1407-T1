@@ -18,6 +18,7 @@
                             <label for="id_body" class="form-label">Conteúdo</label>
                             <textarea name="body" id="id_body" rows="10" class="form-control" placeholder="Qual é a sua receita?" required>{{form.initial.body}} </textarea>
                         </div>
+
                         {% for field in form %}
                             <p>
                                 {% for error in field.errors %}
@@ -31,8 +32,10 @@
                                 <p>{{ form.non_field_errors }}</p>
                             </div>
                         {% endif %} 
+
                         <div class="mt-3 d-flex justify-content-between">
-                            <button type="submit" class="btn btn-warning">Atualizar Post</button> 
+                            <button type="submit" class="btn btn-warning">Atualizar Comentário</button> 
+                            <a href="{% url 'blog:delete_comment' blog_post.slug blog_post_comment.id %}"  type="button" class="btn btn-danger">Deletar Comentário</a>
                         </div>
                     </form>
                 </div>
