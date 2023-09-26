@@ -5,7 +5,7 @@ from account.models import Account
 from django.contrib import messages
 from blog.models import BlogPost, CommentBlogPost
 
-from django.http import Http404
+
 
 # Create your views here.
 
@@ -162,3 +162,6 @@ def delete_comment_view(request, slug, comment_id):
     context['blog_post_comment'] = comment       
 
     return render(request, 'blog/delete_post_comment.html', context)
+
+
+

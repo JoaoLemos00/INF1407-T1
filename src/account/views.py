@@ -16,6 +16,7 @@ def registration_view(request):
 	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
+			
 			form.save()
 			email = form.cleaned_data.get('email')
 			raw_password = form.cleaned_data.get('password1')

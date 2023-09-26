@@ -1,39 +1,40 @@
 
-<div class="container ">
-    <div class="row ">
+<div class="container">
+    <div class="row">
         <!-- Blog post -->
         <div class="card m-auto text-bg-dark">
-            <div class="card-body my-2 ">
+            <div class="card-body my-2">
                 {% if blog_post.author == request.user %}
                 <p class="card-text"> Postado por Você, em {{blog_post.date_published}} </p>
                 {% else %}
-                <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_updated}} </p>
+                <p class="card-text"> Postado por {{blog_post.author}}, em {{blog_post.date_published}} </p>
                 {% endif %}
-                <div class="d-flex justify-content-between align-items-center"> 
+                <div class="d-flex justify-content-between align-items-center">
                     <h2 class="card-title">{{blog_post.title}}</h2>
                 </div>
                 <hr>
-                <a href="{% url 'blog:detail' post.slug %}" style="text-decoration: none !important" class="stretched-link link-dark" >
+                <a href="{% url 'blog:detail' blog_post.slug %}" style="text-decoration: none !important" class=" link-dark">
                     <div class="container">
-                        <p class="card-text text-bg-dark">{{blog_post.body}}</p>
+                        <pre class="card-text text-bg-dark">{{blog_post.body}}</pre>
                     </div>
                     {% if blog_post.image %}
-                        <hr class="text-bg-dark">
-                        <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
+                    <hr class="text-bg-dark">
+                    <img class="card-img-top" src="{{blog_post.image.url}}" alt="">
                     {% endif %}
                 </a>
             </div>
+
             {% if blog_post.date_updated != blog_post.date_published %}
-                <div class="card-footer text-muted">
-                    Atualizado em {{blog_post.date_updated}} 
-                </div>
+            <div class="card-footer text-muted">
+                Atualizado em {{blog_post.date_updated}}
+            </div>
             {% else %}
             <div class="card-footer text-muted text-bg-dark">
                 Post original
             </div>
             {% endif %}
-            
         </div>
         <!-- END Blog post -->
     </div>
+
 </div>

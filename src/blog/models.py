@@ -30,6 +30,15 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
     
+    
+class Rating(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.post.title}: {self.rating}"
+    
         
 @receiver(post_delete, sender=BlogPost)
 def submission_delete(sender, instance,**kwargs):
@@ -57,7 +66,7 @@ class CommentBlogPost(models.Model):
     date_published = models.DateTimeField(auto_now_add=True, verbose_name="date published")
     date_updated = models.DateTimeField(auto_now=True, verbose_name="date updated")
    
-
     def __str__(self):
         return self.body
     
+
